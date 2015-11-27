@@ -1,7 +1,7 @@
 {
   "name": "videojs-vast-plugin",
-  "version": "0.2.1",
-  "description": "A VAST plugin for VideoJS",
+  "version": "0.2.2",
+  "description": "A VAST plugin for VideoJS v5",
   "main": "vast.video.js",
   "directories": {
     "test": "test"
@@ -30,7 +30,7 @@
     "karma-sauce-launcher": "~0.2.10",
     "karma-phantomjs-launcher": "~0.1.4",
     "grunt-karma-coveralls": "2.5.1",
-    
+
     "lodash": "~2.4.1",
     "wd": "~0.2.12"
   },
@@ -39,7 +39,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/theonion/videojs-vast-plugin.git"
+    "url": "git://github.com/svenspielvogel/videojs-vast-plugin.git"
   },
   "keywords": [
     "video",
@@ -49,7 +49,8 @@
   "author": [
     "Shaker Islam <sislam@theonion.com>",
     "Chris Sinchok <csinchok@theonion.com>",
-    "Sean Bloomfield <sbloomfield@theonion.com>"
+    "Sean Bloomfield <sbloomfield@theonion.com>",
+    "Sven Spielvogel <sven@spielvogel.de>"
   ],
   "license": "MIT",
   "bugs": {
