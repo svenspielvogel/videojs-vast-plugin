@@ -174,7 +174,7 @@
                     });
                 },
 
-                preroll: function() {
+                playAd: function() {
                     player.ads.startLinearAdMode();
                     player.vast.showControls = player.controls();
                     if (player.vast.showControls) {
@@ -324,9 +324,29 @@
                     player.trigger('adscanceled');
                     return null;
                 }
-                console.log('[VAST] readyforpreroll');
+                console.log('[VAST] readyforpreroll',settings.type);
                 // set up and start playing preroll
-                player.vast.preroll();
+                if(settings.type != "mid" && settings.type != "post"){
+                    player.vast.playAd();
+                }else{
+                    var ad_played = false;
+                    if(settings.type == "post"){
+                        settings.offset = player.duration();
+                        player.on("ended", function(e){
+                            if(!ad_played){
+                                ad_played = true;
+                                player.vast.playAd();
+                            }
+                        });
+                    }else{
+                        player.on("timeupdate", function(e){
+                            if(settings.offset <= player.currentTime() && !ad_played){
+                                ad_played = true;
+                                player.vast.playAd();
+                            }
+                        });
+                    }
+                }
             });
 
             // make an ads request immediately so we're ready when the viewer hits "play"
