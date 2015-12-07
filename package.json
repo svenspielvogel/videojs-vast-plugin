@@ -7,7 +7,14 @@
     "test": "test"
   },
   "dependencies": {
-    "videojs-contrib-ads": "^0.4.0"
+    "bootstrap": "^3.3.5",
+    "dashjs": "git://github.com/Dash-Industry-Forum/dash.js.git#master",
+    "video.js": "^5.2.1",
+    "videojs-contrib-ads": "^3.1.0",
+    "videojs-contrib-dash": "^2.0.0",
+    "videojs-contrib-hls": "git://github.com/videojs/videojs-contrib-hls.git#development",
+    "videojs-vast-plugin": "git://github.com/svenspielvogel/videojs-vast-plugin.git",
+    "videojs-contrib-media-sources": "^2.4.1"
   },
   "devDependencies": {
     "chai": "~1.9.0",

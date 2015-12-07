@@ -1,84 +1,135 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>Video.js VAST Example</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
 
-  <link href="http://vjs.zencdn.net/4.7.1/video-js.css" rel="stylesheet">
-  <link href="lib/videojs-contrib-ads/videojs.ads.css" rel="stylesheet" type="text/css">
-  <link href="videojs.vast.css" rel="stylesheet" type="text/css">
+    <title>VideoJS MPEG-DASH</title>
 
-  <style type="text/css">
-    .description {
-      background-color:#eee;
-      border: 1px solid #777;
-      padding: 10px;
-      font-size: .8em;
-      line-height: 1.5em;
-      font-family: Verdana, sans-serif;
-    }
-    .example-video-container {
-      display: inline-block;
-    }
-  </style>
-  <!--[if lt IE 9]><script src="lib/es5.js"></script><![endif]-->
-  <script src="http://vjs.zencdn.net/4.7.1/video.js"></script>
-  <script src="lib/videojs-contrib-ads/videojs.ads.js"></script>
+    <!-- Bootstrap core CSS. This is just to make the demo look
+    nice. It's not required for videojs-contrib-dash to work. -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="node_modules/videojs-contrib-ads/src/videojs.ads.css" rel="stylesheet" type="text/css">
+    <link href="node_modules/videojs-vast-plugin/videojs.vast.css" rel="stylesheet" type="text/css">
 
-  <script src="lib/vast-client.js"></script>
-  <script src="videojs.vast.js"></script>
+    <!-- Some custom styles for the demo page -->
+    <style>
+        body {
+            padding-top: 50px;
+            color: #868688;
+            background-color: #FAFCFF;
+        }
+        nav {
+            background-color: #e7e7e7
+        }
+        nav a {
+            color: #868688;
+        }
+        nav a:hover {
+            color: #606062;
+            text-decoration: none;
+        }
+        .navbar-toggle .icon-bar {
+            background-color: #868688;
+        }
+        .starter-template {
+            padding: 40px 15px;
+            text-align: center;
+        }
+        .video-js {
+            margin: 0 auto;
+        }
+    </style>
+
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 </head>
+
 <body>
-  <p class="description">Video.js VAST plugin examples.</p>
 
-  <div class="example-video-container">
-    <p class="description">No autoplay.</p>
+<div class="container">
 
-    <video id="vid1" class="video-js vjs-default-skin" controls preload="auto"
-        poster="http://video-js.zencoder.com/oceans-clip.png"
-        data-setup='{}'
-        width='640'
-        height='400'
-        >
-      <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
-      <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm'>
-      <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg'>
-      <p>Video Playback Not Supported</p>
-    </video>
-  </div>
+    <section class="starter-template">
+        <h1>Flimme VideoJS-Player</h1>
 
-  <div class="example-video-container">
-    <p class="description">With autoplay.</p>
+        <!--
+          -- Your video element. Just like regular HTML5 video.
+          -->
+        <video id=example-video width=600 height=300 class="video-js vjs-default-skin" controls>
+            <source
+                    src="https://d1nz7vs8fpgjfr.cloudfront.net/vod/172047/manifest.mpd"
+                    type="application/dash+xml">
+            <source
+                    src="http://d1nz7vs8fpgjfr.cloudfront.net/vod/172047/playlist.m3u8"
+                    type="application/x-mpegURL">
+        </video>
 
-    <video id="vid2" class="video-js vjs-default-skin" autoplay controls preload="auto"
-        poster="http://video-js.zencoder.com/oceans-clip.png"
-        data-setup='{}'
-        width='640'
-        height='400'
-        >
-      <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
-      <source src="http://video-js.zencoder.com/oceans-clip.webm" type='video/webm'>
-      <source src="http://video-js.zencoder.com/oceans-clip.ogv" type='video/ogg'>
-      <p>Video Playback Not Supported</p>
-    </video>
-  </div>
+    </section>
 
-  <script>
-    var vid1 = videojs('vid1'),
-        vid2 = videojs('vid2');
+</div><!-- /.container -->
 
-    vid1.muted(true);
-    vid1.ads();
-    vid1.vast({
-      url: 'http://videoads.theonion.com/vast/270.xml'
+
+<!-- Bootstrap stuff. These three scripts aren't necessary for you
+     to use videojs-contrib-dash -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+<!--------------------------------------------------------------------------
+  --                      videojs-contrib-dash setup                       --
+  ------------------------------------------------------------------------!>
+
+<!--
+  -- Make sure to include the video.js CSS. This could go in
+  -- the <head>, too.
+  -->
+<link href="node_modules/video.js/dist/video-js.min.css" rel="stylesheet">
+
+<!--
+  -- Include video.js, dash.js, and
+  -- videojs-contrib-dash in your page
+  -->
+<script src="node_modules/video.js/dist/video.js"></script>
+<script src="node_modules/dashjs/dist/dash.all.js"></script>
+<script src="node_modules/videojs-contrib-dash/dist/videojs-dash.min.js"></script>
+<script src="node_modules/videojs-contrib-media-sources/dist/videojs-media-sources.min.js"></script>
+<script src="node_modules/videojs-contrib-hls/dist/videojs.hls.js"></script>
+<script src="node_modules/videojs-contrib-ads/dist/videojs.ads.global.min.js"></script>
+<script src="node_modules/videojs-contrib-ads/dist/videojs.ads.min.js"></script>
+
+<script src="node_modules/videojs-vast-plugin/lib/vast-client.js"></script>
+<script src="videojs.vast.js"></script>
+
+<!--
+  -- Now, initialize your player. That's it!
+  -->
+
+<!--
+  video.js will automatically initialize the video element since it's loaded in
+  the head of the document but you still need to configure and initialize the
+  plugin.
+-->
+<script>
+    videojs.options.flash.swf = 'node_modules/video.js/dist/video-js.swf';
+    var video = document.querySelector('example-video'),
+
+    // save a reference to the video.js player for that element
+            player = videojs('example-video');
+    // initialize the plugin with some custom options:
+    player.ads();
+    player.vast({
+        url: 'http://videoads.theonion.com/vast/270.xml'
     });
-
-    vid2.muted(true);
-    vid2.ads();
-    vid2.vast({
-      url: 'http://videoads.theonion.com/vast/270.xml'
-    });
-  </script>
-
+    /*
+     player.vast({
+     url: 'https://pubads.g.doubleclick.net/gampad/ads?sz=640x480&iu=%2F32573358%2F2nd_test_ad_unit&impl=s&gdfp_req=1&env=vp&output=xml_vast2&unviewed_position_start=1&url=http%3A%2F%2Freleasetest.dash-player.com%2Fads%2F&description_url=%5Bdescription_url%5D&correlator='
+     });*/
+</script>
 </body>
 </html>

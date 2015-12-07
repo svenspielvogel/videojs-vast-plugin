@@ -133,7 +133,6 @@
                     console.log('[VAST] setting up Events',player)
                     var errorOccurred = false,
                         canplayFn = function() {
-                            console.log("TADAAAAAAAAA");
                             player.vastTracker.load();
                         },
                         timeupdateFn = function() {
@@ -325,6 +324,7 @@
                     player.trigger('adscanceled');
                     return null;
                 }
+                console.log('[VAST] readyforpreroll');
                 // set up and start playing preroll
                 player.vast.preroll();
             });
