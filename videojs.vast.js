@@ -309,7 +309,11 @@
 
                 console.log('[VAST] vast-preroll-removed');
                 // preroll done or removed, start playing the actual video
-                player.play();
+                if(settings.type != "post"){
+                    player.play();
+                }else{
+                    player.stop();
+                }
             });
 
             player.on('contentupdate', function(){
