@@ -1,59 +1,58 @@
 'use strict';
 
-var specs = "spec/*Spec.js",
-    helpers = "spec/*Helpers.js";
-
+var specs = "spec/*.js";
 var _ = require('lodash');
 
 var gruntConfig = {
   env: {
     // dynamically filled
   },
-  jshint: {
-    ignore_warning: {
-      options: {
-        '-W083': true,
-      },
-      src: ['videojs.vast.js', specs],
-    }, 
-  },
-  // jasmine: {
-  //   src: 'videojs.vast.js',
-  //   options: {
-  //     specs: specs,
-  //     helpers: helpers,
-  //     vendor: [
-  //       "http://vjs.zencdn.net/4.4.3/video.js",
-  //       "bower_components/videojs-contrib-ads/src/videojs.ads.js",
-  //       "lib/vast-client.js"
-  //     ]
-  //   }
-  // },
-  karma: {
-    unit: {
-      configFile: 'karma.conf.js'
-    }
-  },
-  coveralls: {
-    options: {
-      coverage_dir: './coverage',
-      force: true,
-      recursive: true
-    }
-  },
-  connect: {
-    server: {
-      options: {
-        keepalive: true
-      }
-    }
-  },
-  watch: {
-    scripts: {
-      files: ['*.js', 'spec/*.js'],
-      tasks: ['jshint', 'jasmine']
+    qunit: {
+        files: 'spec/**/*.html'
     },
-  }
+    jshint: {
+        gruntfile: {
+            options: {
+                node: true
+            },
+            src: 'Gruntfile.js'
+        },
+        src: {
+            options: {
+                jshintrc: '.jshintrc'
+            },
+            src: ['videojs.vast.js']
+        },
+        test: {
+            options: {
+                jshintrc: '.jshintrc'
+            },
+            src: ['spec/**/*.js']
+        }
+    },
+    watch: {
+        gruntfile: {
+            files: '<%= jshint.gruntfile.src %>',
+            tasks: ['jshint:gruntfile']
+        },
+        src: {
+            files: '<%= jshint.src.src %>',
+            tasks: ['jshint:src', 'qunit']
+        },
+        test: {
+            files: '<%= jshint.test.src %>',
+            tasks: ['jshint:test', 'qunit']
+        }
+    },
+    connect: {
+        dev: {
+            options: {
+                hostname: '*',
+                port: 9898,
+                keepalive: true
+            }
+        }
+    }
 };
 
 module.exports = function(grunt) {
@@ -64,14 +63,14 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-concurrent');
-  grunt.loadNpmTasks('grunt-karma-coveralls');
-  grunt.loadNpmTasks('grunt-karma');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
 
-  grunt.registerTask('default', ['test:sauce:' + _(desireds).keys().first()]);
+
+/*  grunt.registerTask('default', ['test:sauce:' + _(desireds).keys().first()]);
 
   _(desireds).each(function(desired, key) {
     grunt.registerTask('test:sauce:' + key, ['env:' + key, 'simplemocha:sauce']);
-  });
+  });*/
 
-  grunt.registerTask('default', ['jshint', 'karma']);
+  grunt.registerTask('default', ['jshint', 'qunit']);
 };

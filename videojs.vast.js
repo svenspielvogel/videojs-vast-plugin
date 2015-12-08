@@ -130,13 +130,13 @@
                 },
 
                 setupEvents: function() {
-                    console.log('[VAST] setting up Events',player)
+                    console.log('[VAST] setting up Events',player);
                     var errorOccurred = false,
                         canplayFn = function() {
                             player.vastTracker.load();
                         },
                         timeupdateFn = function() {
-                            console.log('[VAST] timeipdateFn', player.currentTime())
+                            console.log('[VAST] timeipdateFn', player.currentTime());
 
                             if (isNaN(player.vastTracker.assetDuration)) {
                                 player.vastTracker.assetDuration = player.duration();
@@ -162,7 +162,7 @@
                     player.on('aderror', errorFn);
 
                     player.one('vast-preroll-removed', function() {
-                        console.log('[VAST] vast-preroll-removed')
+                        console.log('[VAST] vast-preroll-removed');
 
                         player.off('adcanplay', canplayFn);
                         player.off('adtimeupdate', timeupdateFn);
@@ -242,7 +242,7 @@
                 },
 
                 tearDown: function() {
-                    console.log('[VAST] tearDown')
+                    console.log('[VAST] tearDown');
                     // remove preroll buttons
                     player.vast.skipButton.parentNode.removeChild(player.vast.skipButton);
                     player.vast.blocker.parentNode.removeChild(player.vast.blocker);
@@ -262,7 +262,7 @@
                     player.trigger('vast-preroll-removed');
                 },
 
-                timeupdate: function(e) {
+                timeupdate: function() {
                     player.loadingSpinner.el().style.display = "none";
                     var timeLeft = Math.ceil(settings.skip - player.currentTime());
                     if(timeLeft > 0) {
@@ -309,7 +309,7 @@
 
                 console.log('[VAST] vast-preroll-removed');
                 // preroll done or removed, start playing the actual video
-                if(settings.type != "post"){
+                if(settings.type !== "post"){
                     player.play();
                 }else{
                     player.stop();
@@ -330,20 +330,20 @@
                 }
                 console.log('[VAST] readyforpreroll',settings.type);
                 // set up and start playing preroll
-                if(settings.type != "mid" && settings.type != "post"){
+                if(settings.type !== "mid" && settings.type !== "post"){
                     player.vast.playAd();
                 }else{
                     var ad_played = false;
-                    if(settings.type == "post"){
+                    if(settings.type === "post"){
                         settings.offset = player.duration();
-                        player.on("ended", function(e){
+                        player.on("ended", function(){
                             if(!ad_played){
                                 ad_played = true;
                                 player.vast.playAd();
                             }
                         });
                     }else{
-                        player.on("timeupdate", function(e){
+                        player.on("timeupdate", function(){
                             if(settings.offset <= player.currentTime() && !ad_played){
                                 ad_played = true;
                                 player.vast.playAd();

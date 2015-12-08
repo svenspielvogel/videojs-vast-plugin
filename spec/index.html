@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Video.js Flimme</title>
+    <link rel="stylesheet" href="../node_modules/qunitjs/qunit/qunit.css">
+</head>
+<body>
+<div id="qunit"></div>
+<div id="qunit-fixture"></div>
+<script src="../node_modules/qunitjs/qunit/qunit.js"></script>
+<script>
+    test('the environment is sane', function() {
+        ok(true, 'everything is swell');
+    });
+</script>
+<script src="../node_modules/video.js/dist/video.js"></script>
+<script src="../node_modules/dashjs/dist/dash.all.js"></script>
+<script src="../node_modules/videojs-contrib-dash/dist/videojs-dash.min.js"></script>
+<script src="../node_modules/videojs-contrib-media-sources/dist/videojs-media-sources.min.js"></script>
+<script src="../node_modules/videojs-contrib-hls/dist/videojs.hls.js"></script>
+<script src="../node_modules/videojs-contrib-ads/dist/videojs.ads.global.min.js"></script>
+<script src="../node_modules/videojs-contrib-ads/dist/videojs.ads.min.js"></script>
+
+<script src="../node_modules/videojs-vast-plugin/lib/vast-client.js"></script>
+<script src="../videojs.vast.js"></script>
+<script src="videojs-vast.test.js"></script>
+</body>
+</html>
