@@ -123,9 +123,11 @@
             player = videojs('example-video');
     // initialize the plugin with some custom options:
     player.ads();
+    // type: pre (default), mid, post
+    //if mid, use offset to determine progress in %
     player.vast({
-        type: 'post',
-        offset: 3,
+        type: 'mid',
+        offset: 10,
         url: 'http://videoads.theonion.com/vast/270.xml'
     });
     /*

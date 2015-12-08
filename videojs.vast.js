@@ -343,8 +343,9 @@
                             }
                         });
                     }else{
+                        var timeoffset = (parseFloat(settings.offset)/100*player.duration());
                         player.on("timeupdate", function(){
-                            if(settings.offset <= player.currentTime() && !ad_played){
+                            if(timeoffset <= player.currentTime() && !ad_played){
                                 ad_played = true;
                                 player.vast.playAd();
                             }
