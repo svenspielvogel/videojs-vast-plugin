@@ -311,8 +311,6 @@
                 // preroll done or removed, start playing the actual video
                 if(settings.type !== "post"){
                     player.play();
-                }else{
-                    player.stop();
                 }
             });
 
