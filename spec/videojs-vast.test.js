@@ -5,6 +5,7 @@
 
     var realIsHtmlSupported,
         player,
+        oldClearImmediate,
 
     // local QUnit aliases
     // http://api.qunitjs.com/
@@ -28,8 +29,9 @@
 
     console.log(equal,strictEqual,deepEqual,notEqual,throws);
 
-    module('videojs-flimme', {
-        setup: function() {
+    module('videojs-vast', {
+        beforeEach: function() {
+            console.log("before");
             // force HTML support so the tests run in a reasonable
             // environment under phantomjs
             realIsHtmlSupported = videojs.getTech('Html5').isSupported;
@@ -39,25 +41,68 @@
 
             // create a video element
             var video = document.createElement('video');
+            video.src = "http://vjs.zencdn.net/v/oceans.mp4";
+            video.setAttribute = "controls";
+
             document.querySelector('#qunit-fixture').appendChild(video);
+
+            // provide implementations for any video element functions that are
+            // used in the tests
+            video.load = function() {};
+            video.play = function() {};
+
+            // see https://github.com/videojs/videojs-contrib-ads/blob/master/test/videojs.ads.test.js#L23
+            window.setImmediate = function(callback) {
+                callback.call(window);
+            };
+            oldClearImmediate = window.clearImmediate;
 
             // create a video.js player
             player = videojs(video);
-
-            // initialize the plugin with the default options
-            player.ads();
-            player.vast({
-                type: 'post',
-                offset: 3,
-                url: 'http://videoads.theonion.com/vast/270.xml'
-            });
+            player.volume(0);
         },
-        teardown: function() {
+        afterEach: function() {
             videojs.getTech('Html5').isSupported = realIsHtmlSupported;
+            window.clearImmediate = oldClearImmediate;
         }
     });
 
-    test('registers itself', function() {
-        ok(player.vast, 'registered the plugin');
+    test('plugin registrations', function() {
+        console.log("test");
+
+        ok(player.vast, 'registered VAST');
+        ok(player.ads, 'registered ADS');
+        equal(typeof(player.vast), 'function');
+        equal(typeof(player.ads), 'function');
+
     });
+
+    test('false setup', function(){
+        console.log("test");
+
+        equal(typeof(player.vast), 'function');
+        player.ads();
+        player.vast({});
+        console.log("test");
+
+        equal(player.vast.sources, undefined);
+        player.play();
+        player.on("play",function(){
+            console.log(player);
+        });
+
+    });
+
+    test('provided setup', function(){
+        console.log("test");
+        // initialize the plugin with the default options
+        player.ads();
+        player.vast({
+            type: 'post',
+            offset: 3,
+            url: 'sample-vast.xml'
+        });
+        equal(typeof(player.vast), 'object');
+    });
+
 })(window, window.videojs, window.QUnit);

@@ -243,6 +243,9 @@
 
                 tearDown: function() {
                     console.log('[VAST] tearDown');
+                    //TODO maybe this might be unnessecary some day, but this
+                    player.load = function(){console.log("[VAST] overwritten load");};
+
                     // remove preroll buttons
                     player.vast.skipButton.parentNode.removeChild(player.vast.skipButton);
                     player.vast.blocker.parentNode.removeChild(player.vast.blocker);
